@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Library | Admin</title>
+
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" , rel="stylesheet">
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <!-- PNotify -->
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+
+
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+
+</head>
+
+<body class="nav-md" ng-app="adminController">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="profile" class="site_title"><i class="fa fa-book"></i> <span>Techniche Library</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="/images/default_profile_picture.png" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>Admin</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li><a><i class="fa fa-list-ul"></i> Tasks <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li class="active"><a data-toggle="tab" href="#adminHome">Home</a></li>
+                                        <li><a data-toggle="tab" href="#issueReturnBooksAdmin">Issue/Return Requests</a></li>
+                                        <li><a data-toggle="tab" href="#addRemoveBooks">Add/Remove Books</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="/images/default_profile_picture.png" alt="">Admin
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+
+                    <div class="clearfix"></div>
+
+                    <div class="tab-content row">
+                        <div id="adminHome" class="tab-pane active col-md-12 col-sm-12 col-xs-12 " ng-controller="populateBookList">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Library Database <small>Books</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox" style="min-width: 0">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div id="bookDetailsContainer" class="x_content" style="display: none">
+                                    <p class="text-muted font-13 m-b-30">
+                                    </p>
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Book Name</th>
+                                                <th>Author Name</th>
+                                                <th>Added On</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                            <tr ng-repeat="books in bookList track by $index">
+                                                <td>{{books["NAME"]}}</td>
+                                                <td>{{books["AUTHOR"]}}</td>
+                                                <td>{{books["DATE_ADDED"]}}</td>
+                                                <td>{{books["STATUS"]}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="x_content">
+                                    <button type="button" class="btn btn-primary" ng-click="refreshDataTable()">Refresh Book Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="addRemoveBooks" class="tab-pane col-md-6 col-sm-6 col-xs-12" style="width: 100%">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2><i class="fa fa-bars"></i> Add/Remove <small>Books</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox" style="min-width: 0">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist" style="background: none">
+                                            <li role="presentation" class="active"><a href="#addBookTab" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Add Book</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#removeBookTab" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Remove Book</a>
+                                            </li>
+                                        </ul>
+                                        <div id="myTabContent" class="tab-content">
+                                            <br />
+                                            <div role="tabpanel" class="tab-pane fade active in" id="addBookTab" aria-labelledby="profile-tab" ng-controller="addBook">
+                                                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Book Name <span class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" id="book-name" required="required" class="form-control col-md-7 col-xs-12" ng-model="newBook.name">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Author <span class="required">*</span>
+                                                        </label>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                                            <input type="text" id="author" name="author" required="required" class="form-control col-md-7 col-xs-12" ng-model="newBook.author">
+                                                        </div>
+                                                    </div>
+                                                    <div class="ln_solid"></div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                                            <button type="submit" class="btn btn-success" ng-click="addNewBook()">Submit</button>
+                                                            <button type="submit" class="btn btn-primary" ng-click="refreshPage()">Done</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="removeBookTab" aria-labelledby="profile-tab">
+                                                <div class="tab-pane active col-md-12 col-sm-12 col-xs-12 " ng-controller="deleteBook">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <h2>Library Database <small>Delete Books</small></h2>
+                                                            <ul class="nav navbar-right panel_toolbox" style="min-width: 0">
+                                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div id="deleteBookDetailsContainer" class="x_content" style="display: none">
+                                                            <p class="text-muted font-13 m-b-30">
+                                                            </p>
+                                                            <table id="datatable-checkbox" class="table table-striped table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Book Name</th>
+                                                                        <th>Author Name</th>
+                                                                        <th>Added On</th>
+
+                                                                    </tr>
+                                                                </thead>
+
+
+                                                                <tbody style="cursor: pointer">
+                                                                    <tr ng-repeat="books in bookList track by $index">
+                                                                        <td>{{books["NAME"]}}</td>
+                                                                        <td>{{books["AUTHOR"]}}</td>
+                                                                        <td>{{books["DATE_ADDED"]}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            <button type="button" class="btn btn-warning" ng-click="deleteBooks()">Delete Selected Books</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="issueReturnBooksAdmin" aria-labelledby="profile-tab">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2><i class="fa fa-bars"></i> View Issue/Return <small>Requests</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox" style="min-width: 0">
+                                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist" style="background: none">
+                                            <li role="presentation" class="active"><a href="#viewIssues" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Issue Requests</a>
+                                            </li>
+                                            <li role="presentation" class=""><a href="#viewReturns" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Return Requests</a>
+                                            </li>
+                                        </ul>
+                                        <div id="myTabContent" class="tab-content">
+                                            <br />
+                                            <div role="tabpanel" class="tab-pane fade active in" id="viewIssues" aria-labelledby="profile-tab" ng-controller="getIssueRequests">
+                                                <div class="x_panel">
+                                                    <div class="x_title">
+                                                        <h2>Issue Database <small>View Issues</small></h2>
+                                                        <ul class="nav navbar-right panel_toolbox" style="min-width: 0">
+                                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div id="issueDetailsContainer" class="x_content" style="display: none">
+                                                        <p class="text-muted font-13 m-b-30">
+                                                        </p>
+                                                        <table id="datatable-issues" class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Book List</th>
+                                                                    <th>Issue Date</th>
+                                                                    <th>Due Date</th>
+                                                                    <th>Name of Issuer</th>
+                                                                    <th>Issuer Contact</th>
+                                                                    <th>Issuer Email</th>
+                                                                </tr>
+                                                            </thead>
+
+
+                                                            <tbody style="cursor: pointer">
+                                                                <tr ng-repeat="issues in issueList track by $index">
+                                                                    <td>{{issues["BOOK_LIST"]}}</td>
+                                                                    <td>{{issues["ISSUE_DATE"]}}</td>
+                                                                    <td>{{issues["DUE_DATE"]}}</td>
+                                                                    <td>{{issues["USER_NAME"]}}</td>
+                                                                    <td>{{issues["USER_CONTACT"]}}</td>
+                                                                    <td>{{issues["USER_EMAIL"]}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="x_content">
+                                                        <button type="button" class="btn btn-primary" ng-click="approveRequests()">Approve Issues</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane fade" id="viewReturns" aria-labelledby="profile-tab" ng-controller="getReturnRequests">
+                                                <div class="tab-pane active col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <h2>Return Database <small>View Returns</small></h2>
+                                                            <ul class="nav navbar-right panel_toolbox" style="min-width: 0">
+                                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div id="returnDetailsContainer" class="x_content" style="display: none">
+                                                            <p class="text-muted font-13 m-b-30">
+                                                            </p>
+                                                            <table id="datatable-return" class="table table-striped table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Book List</th>
+                                                                        <th>Issue Date</th>
+                                                                        <th>Due Date</th>
+                                                                        <th>Name of Issuer</th>
+                                                                        <th>Issuer Contact</th>
+                                                                        <th>Issuer Email</th>
+                                                                    </tr>
+                                                                </thead>
+
+
+                                                                <tbody style="cursor: pointer">
+                                                                    <tr ng-repeat="returns in returnList track by $index">
+                                                                        <td>{{returns["BOOK_LIST"]}}</td>
+                                                                        <td>{{returns["ISSUE_DATE"]}}</td>
+                                                                        <td>{{returns["DUE_DATE"]}}</td>
+                                                                        <td>{{returns["USER_NAME"]}}</td>
+                                                                        <td>{{returns["USER_CONTACT"]}}</td>
+                                                                        <td>{{returns["USER_EMAIL"]}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            <button type="button" class="btn btn-primary" ng-click="approveReturns()">Approve Returns</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Library | Footer
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <!-- iCheck -->
+    <script src="/vendors/iCheck/icheck.min.js"></script>
+    <!-- Datatables -->
+    <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+    <script src="/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+
+    <!-- Angular App -->
+    <script type="application/javascript" src="/javascript/angular.min.js"></script>
+    <script src="/javascript/components/adminController.js"></script>
+
+
+    <!-- PNotify -->
+    <script src="/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/build/js/custom.min.js"></script>
+
+    <!-- Datatables -->
+    <!-- /Datatables -->
+</body>
+
+</html>
